@@ -12,7 +12,7 @@ import Alamofire
 import Kingfisher
 
 class ViewController: UIViewController {
-
+    
     
     
     @IBOutlet var beerImageView: UIImageView!
@@ -23,18 +23,46 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
+        
         beerImageView.tintColor = .systemBrown
         configureLabel()
         configureButton()
         
-        callRequest()
-
+        callRequest(imageView: beerImageView, nameLabel: beerNameLabel, introdcueLabel: descriptionLabel)
+        
     }
     
     
     @IBAction func showBeerButtonTapped(_ sender: UIButton) {
-        callRequest()
+        
+        callRequest(imageView: beerImageView, nameLabel: beerNameLabel, introdcueLabel: descriptionLabel)
+    }
+    
+    func callRequest(imageView: UIImageView, nameLabel: UILabel, introdcueLabel: UILabel) {
+        
+        let url = "https://api.punkapi.com/v2/beers/random"
+        
+        AF.request(url, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                //                print("JSON: \(json)")
+                
+                let imageString = json[0]["image_url"].stringValue
+                let name = json[0]["name"].stringValue
+                let description = json[0]["description"].stringValue
+                
+                nameLabel.text = "맥주 이름: \(name)"
+                introdcueLabel.text = "맛 설명: \(description)"
+                guard let imageUrl = URL(string: imageString) else {
+                    return imageView.image = UIImage(systemName: "wineglass.fill")
+                }
+                imageView.kf.setImage(with: imageUrl)
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     func configureButton() {
@@ -50,56 +78,5 @@ class ViewController: UIViewController {
         beerNameLabel.text = ""
         descriptionLabel.text = ""
     }
-    
-    func callRequest() {
-        let url = "https://api.punkapi.com/v2/beers/random"
-        
-        AF.request(url, method: .get).validate().responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                let json = JSON(value)
-                print("JSON: \(json)")
-                
-                let imageString = json[0]["image_url"].stringValue
-                if let imageUrl = URL(string: imageString) {
-                    self.beerImageView.kf.setImage(with: imageUrl)
-                } else {
-                    self.beerImageView.image = UIImage(systemName: "wineglass.fill")
-                }
-                
-                guard let imageUrl = URL(string: imageString) else {
-                    return self.beerImageView.image = UIImage(systemName: "wineglass.fill")
-                }
-                self.beerImageView.kf.setImage(with: imageUrl)
-                
-                let name = json[0]["name"].stringValue
-                let description = json[0]["description"].stringValue
-                
-                self.beerNameLabel.text = "맥주 이름: \(name)"
-                self.descriptionLabel.text = "맛 설명: \(description)"
-                
-                print(name, description)
-                
-                
-            case .failure(let error):
-                print(error)
-            }
-        }
-    }
-    
-    func showImage(url: URL) {
-        DispatchQueue.global().async {
-            if let data = try? Data(contentsOf: url) {
-                if let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.beerImageView.image = image
-                    }
-                }
-            }
-        }
-    }
-    
-    
-
 }
 
