@@ -23,8 +23,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        descriptionLabel.numberOfLines = 0
+
         beerImageView.tintColor = .systemBrown
+        configureLabel()
         configureButton()
         
         callRequest()
@@ -44,6 +45,12 @@ class ViewController: UIViewController {
         showBeerButton.layer.cornerRadius = 8
     }
     
+    func configureLabel() {
+        descriptionLabel.numberOfLines = 0
+        beerNameLabel.text = ""
+        descriptionLabel.text = ""
+    }
+    
     func callRequest() {
         let url = "https://api.punkapi.com/v2/beers/random"
         
@@ -59,6 +66,11 @@ class ViewController: UIViewController {
                 } else {
                     self.beerImageView.image = UIImage(systemName: "wineglass.fill")
                 }
+                
+                guard let imageUrl = URL(string: imageString) else {
+                    return self.beerImageView.image = UIImage(systemName: "wineglass.fill")
+                }
+                self.beerImageView.kf.setImage(with: imageUrl)
                 
                 let name = json[0]["name"].stringValue
                 let description = json[0]["description"].stringValue
