@@ -6,14 +6,83 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Alamofire
 
 class ViewController: UIViewController {
 
+    
+    
+    @IBOutlet var beerImageView: UIImageView!
+    @IBOutlet var beerNameLabel: UILabel!
+    @IBOutlet var descriptionLabel: UILabel!
+    
+    @IBOutlet var showBeerButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-    }
+        
+        descriptionLabel.numberOfLines = 0
+        beerImageView.tintColor = .systemBrown
+        configureButton()
+        
+        callRequest()
 
+    }
+    
+    
+    @IBAction func showBeerButtonTapped(_ sender: UIButton) {
+        callRequest()
+    }
+    
+    func configureButton() {
+        showBeerButton.setTitle("새 맥주 보기", for: .normal)
+        showBeerButton.backgroundColor = .systemIndigo
+        showBeerButton.setTitleColor(.white, for: .normal)
+        showBeerButton.setTitleColor(.systemIndigo, for: .highlighted)
+        showBeerButton.layer.cornerRadius = 8
+    }
+    
+    func callRequest() {
+        let url = "https://api.punkapi.com/v2/beers/random"
+        
+        AF.request(url, method: .get).validate().responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                print("JSON: \(json)")
+                
+                let imageString = json[0]["image_url"].stringValue
+                guard let imageUrl = URL(string: imageString) else {
+                    self.beerImageView.image = UIImage(systemName: "wineglass.fill")
+                    print("이미지 url 없음")
+                    return }
+                let name = json[0]["name"].stringValue
+                let description = json[0]["description"].stringValue
+                
+                self.showImage(url: imageUrl)
+                self.beerNameLabel.text = "맥주 이름: \(name)"
+                self.descriptionLabel.text = "맛 설명: \(description)"
+                
+                print(name, description)
+                
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func showImage(url: URL) {
+        DispatchQueue.global().async {
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self.beerImageView.image = image
+                    }
+                }
+            }
+        }
+    }
 
 }
 
