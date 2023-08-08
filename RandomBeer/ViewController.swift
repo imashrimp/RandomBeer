@@ -6,8 +6,10 @@
 //
 
 import UIKit
+
 import SwiftyJSON
 import Alamofire
+import Kingfisher
 
 class ViewController: UIViewController {
 
@@ -52,14 +54,15 @@ class ViewController: UIViewController {
                 print("JSON: \(json)")
                 
                 let imageString = json[0]["image_url"].stringValue
-                guard let imageUrl = URL(string: imageString) else {
+                if let imageUrl = URL(string: imageString) {
+                    self.beerImageView.kf.setImage(with: imageUrl)
+                } else {
                     self.beerImageView.image = UIImage(systemName: "wineglass.fill")
-                    print("이미지 url 없음")
-                    return }
+                }
+                
                 let name = json[0]["name"].stringValue
                 let description = json[0]["description"].stringValue
                 
-                self.showImage(url: imageUrl)
                 self.beerNameLabel.text = "맥주 이름: \(name)"
                 self.descriptionLabel.text = "맛 설명: \(description)"
                 
@@ -83,6 +86,8 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    
 
 }
 
