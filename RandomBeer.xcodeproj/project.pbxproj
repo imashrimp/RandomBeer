@@ -16,7 +16,8 @@
 		1781B9022A812A9C00888E05 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 1781B9012A812A9C00888E05 /* SwiftyJSON */; };
 		1781B9052A812AA800888E05 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 1781B9042A812AA800888E05 /* Alamofire */; };
 		1781B90C2A8212A500888E05 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1781B90B2A8212A500888E05 /* Kingfisher */; };
-		1781B90E2A82155E00888E05 /* method.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1781B90D2A82155E00888E05 /* method.swift */; };
+		17F9327B2A84D2BB000B2472 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 17F9327A2A84D2BB000B2472 /* .gitignore */; };
+		17F9327D2A84D307000B2472 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17F9327C2A84D307000B2472 /* APIKey.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +29,8 @@
 		1781B8F52A812A8E00888E05 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1781B8F82A812A8E00888E05 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1781B8FA2A812A8E00888E05 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1781B90D2A82155E00888E05 /* method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = method.swift; sourceTree = SOURCE_ROOT; };
+		17F9327A2A84D2BB000B2472 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; name = .gitignore; path = RandomBeer/.gitignore; sourceTree = "<group>"; };
+		17F9327C2A84D307000B2472 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 		1781B8E02A812A8D00888E05 = {
 			isa = PBXGroup;
 			children = (
+				17F9327A2A84D2BB000B2472 /* .gitignore */,
 				1781B8EB2A812A8D00888E05 /* RandomBeer */,
 				1781B8EA2A812A8D00888E05 /* Products */,
 			);
@@ -64,7 +67,6 @@
 		1781B8EB2A812A8D00888E05 /* RandomBeer */ = {
 			isa = PBXGroup;
 			children = (
-				1781B90D2A82155E00888E05 /* method.swift */,
 				1781B8EC2A812A8D00888E05 /* AppDelegate.swift */,
 				1781B8EE2A812A8D00888E05 /* SceneDelegate.swift */,
 				1781B8F02A812A8D00888E05 /* ViewController.swift */,
@@ -72,6 +74,7 @@
 				1781B8F52A812A8E00888E05 /* Assets.xcassets */,
 				1781B8F72A812A8E00888E05 /* LaunchScreen.storyboard */,
 				1781B8FA2A812A8E00888E05 /* Info.plist */,
+				17F9327C2A84D307000B2472 /* APIKey.swift */,
 			);
 			path = RandomBeer;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17F9327B2A84D2BB000B2472 /* .gitignore in Resources */,
 				1781B8F92A812A8E00888E05 /* LaunchScreen.storyboard in Resources */,
 				1781B8F62A812A8E00888E05 /* Assets.xcassets in Resources */,
 				1781B8F42A812A8D00888E05 /* Main.storyboard in Resources */,
@@ -157,9 +161,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1781B90E2A82155E00888E05 /* method.swift in Sources */,
 				1781B8F12A812A8D00888E05 /* ViewController.swift in Sources */,
 				1781B8ED2A812A8D00888E05 /* AppDelegate.swift in Sources */,
+				17F9327D2A84D307000B2472 /* APIKey.swift in Sources */,
 				1781B8EF2A812A8D00888E05 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
