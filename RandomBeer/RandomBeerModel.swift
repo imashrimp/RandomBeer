@@ -11,7 +11,7 @@ typealias Beers = [QuickType]
 
 struct QuickType: Codable {
     let name, description: String
-    let imageURL: String
+    let imageURL: String?
     
     enum CodingKeys: String, CodingKey {
         case name

@@ -7,12 +7,6 @@
 
 import UIKit
 
-import SwiftyJSON
-import Alamofire
-import Kingfisher
-
-
-
 class ViewController: UIViewController {
     
     
@@ -33,17 +27,22 @@ class ViewController: UIViewController {
     
     
     @IBAction func showBeerButtonTapped(_ sender: UIButton) {
-        print("버튼")
+
         callRequest(imageView: beerImageView, nameLabel: beerNameLabel, introduceLabel: descriptionLabel) { beer in
             
             guard
                 let quickTypeData = beer
             else { return }
 
+            self.beerNameLabel.text = quickTypeData.first?.name
+            self.descriptionLabel.text = quickTypeData.first?.description
+            
             guard
                 let urlString = quickTypeData.first?.imageURL,
                     let url = URL(string: urlString)
-            else { return }
+            else {
+                self.beerImageView.image = UIImage(systemName: "wineglass.fill")
+                return }
 
             DispatchQueue.global().async {
                 do {
@@ -54,12 +53,7 @@ class ViewController: UIViewController {
                         self.beerImageView.image = UIImage(data: imageData!)
                     }
                 }
-
             }
-
-            self.beerNameLabel.text = quickTypeData.first?.name
-            self.descriptionLabel.text = quickTypeData.first?.description
-            
         }
     }
     
@@ -103,7 +97,6 @@ class ViewController: UIViewController {
                 do {
                     let result = try JSONDecoder().decode(Beers.self, from: data)
                     completionHandler(result)
-                    dump(result)
                 } catch {
                     completionHandler(nil)
                     print(error.localizedDescription)
